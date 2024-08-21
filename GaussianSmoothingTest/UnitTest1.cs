@@ -65,6 +65,37 @@ public static class ImageProcessor
         return smoothed;
     }
 
+    public static byte[,] ApplyGaussianSmoothing(byte[,] image, double sigma, double truncate = 4.0)
+    {
+        // Convert byte array to double array
+        int width = image.GetLength(0);
+        int height = image.GetLength(1);
+        double[,] doubleImage = new double[width, height];
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                doubleImage[x, y] = image[x, y];
+            }
+        }
+
+        // Perform Gaussian smoothing using the existing method
+        double[,] smoothedDouble = ApplyGaussianSmoothing(doubleImage, sigma, truncate);
+
+        // Convert the double array back to a byte array
+        byte[,] smoothedByte = new byte[width, height];
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                smoothedByte[x, y] = (byte)Math.Clamp(Math.Round(smoothedDouble[x, y]), 0, 255);
+            }
+        }
+
+        return smoothedByte;
+    }
+
     // Reflect helper function to handle boundary conditions
     private static int Reflect(int x, int length)
     {
@@ -122,95 +153,41 @@ public class ImageProcessorTests
             .WhenTypeIs<double>());
     }
 
-    //[Fact]
-    //public void ApplyGaussianSmoothing_WithUniformImage_ShouldReturnAlmostUniformArray()
-    //{
-    //    // Arrange
-    //    byte[,] image = new byte[,]
-    //    {
-    //        { 50, 50, 50 },
-    //        { 50, 50, 50 },
-    //        { 50, 50, 50 }
-    //    };
-    //    double sigma = 1.0;
+    [Fact]
+    public void ApplyGaussianSmoothing_ByteArray_ShouldReturnExpectedSmoothedArray()
+    {
+        // Arrange
+        byte[,] image = new byte[,]
+        {
+            { 10, 20, 30, 40, 50 },
+            { 60, 70, 80, 90, 100 },
+            { 110, 120, 130, 140, 150 },
+            { 160, 170, 180, 190, 200 },
+            { 210, 220, 230, 240, 250 }
+        };
+        double sigma = 1.0;
 
-    //    // Act
-    //    byte[,] result = ImageProcessor.ApplyGaussianSmoothing(image, sigma);
+        // Act
+        byte[,] result = ImageProcessor.ApplyGaussianSmoothing(image, sigma);
 
-    //    // Assert
-    //    result.Should().NotBeNull();
-    //    result.GetLength(0).Should().Be(image.GetLength(0));
-    //    result.GetLength(1).Should().Be(image.GetLength(1));
+        _output.WriteLine($"RESULT:\n{result.PrettyPrint()}");
 
-    //    foreach (var pixel in result)
-    //    {
-    //        pixel.Should().BeInRange(49, 51);
-    //    }
-    //}
+        // Expected result converted from previous double implementation
+        byte[,] expected = new byte[,]
+        {
+            { 36,  42,  51,  61,  67 },
+            { 68,  74,  83,  93,  99 },
+            {114, 121, 130, 139, 146 },
+            {161, 167, 177, 186, 192 },
+            {193, 199, 209, 218, 224 }
+        };
 
-    //[Fact]
-    //public void ApplyGaussianSmoothing_ExactValueCheck()
-    //{
-    //    // Arrange
-    //    byte[,] image = new byte[,]
-    //    {
-    //        { 0, 0, 0 },
-    //        { 0, 100, 0 },
-    //        { 0, 0, 0 }
-    //    };
-    //    double sigma = 1.0;
+        _output.WriteLine($"EXPECT:\n{expected.PrettyPrint()}");
 
-    //    // Act
-    //    byte[,] result = ImageProcessor.ApplyGaussianSmoothing(image, sigma);
+        // Assert
+        result.Should().BeEquivalentTo(expected, options => options.WithStrictOrdering());
+    }
 
-    //    // Assert
-    //    byte[,] expected = new byte[,]
-    //    {
-    //        { 6, 10, 6 },
-    //        { 10, 16, 10 },
-    //        { 6, 10, 6 }
-    //    };
-
-    //    result.Should().BeEquivalentTo(expected, options => options.WithStrictOrdering());
-    //}
-
-    //[Fact]
-    //public void ApplyGaussianSmoothing_SinglePixel_ShouldReturnSamePixel()
-    //{
-    //    // Arrange
-    //    byte[,] image = new byte[,]
-    //    {
-    //        { 128 }
-    //    };
-    //    double sigma = 1.0;
-
-    //    // Act
-    //    byte[,] result = ImageProcessor.ApplyGaussianSmoothing(image, sigma);
-
-    //    // Assert
-    //    result.Should().BeEquivalentTo(image); // A single pixel image should remain the same
-    //}
-
-    //[Fact]
-    //public void ApplyGaussianSmoothing_LargeSigma_ShouldReturnBlurryImage()
-    //{
-    //    // Arrange
-    //    byte[,] image = new byte[,]
-    //    {
-    //        { 0, 255, 0 },
-    //        { 255, 255, 255 },
-    //        { 0, 255, 0 }
-    //    };
-    //    double sigma = 5.0;
-
-    //    // Act
-    //    byte[,] result = ImageProcessor.ApplyGaussianSmoothing(image, sigma);
-
-    //    // Assert
-    //    result.Should().NotBeNull();
-    //    result[1, 1].Should().BeLessThan(255); // Center pixel should be blurred
-    //    result[0, 0].Should().BeGreaterThan(0); // Corners should no longer be black
-    //}
 
     [Fact]
     public void TestPrettyPrint()
