@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaussianSmoothing", "GaussianSmoothing\GaussianSmoothing.csproj", "{03DEED5D-B8BD-4DBA-B220-7C992245C5BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{317F9399-7A40-4291-91FB-B77BAE81D39C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilsTests", "UtilsTests\UtilsTests.csproj", "{6C3B901A-7F4C-4F81-8877-88762EE44AEA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,14 @@ Global
 		{03DEED5D-B8BD-4DBA-B220-7C992245C5BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03DEED5D-B8BD-4DBA-B220-7C992245C5BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03DEED5D-B8BD-4DBA-B220-7C992245C5BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{317F9399-7A40-4291-91FB-B77BAE81D39C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{317F9399-7A40-4291-91FB-B77BAE81D39C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{317F9399-7A40-4291-91FB-B77BAE81D39C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{317F9399-7A40-4291-91FB-B77BAE81D39C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C3B901A-7F4C-4F81-8877-88762EE44AEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C3B901A-7F4C-4F81-8877-88762EE44AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C3B901A-7F4C-4F81-8877-88762EE44AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C3B901A-7F4C-4F81-8877-88762EE44AEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

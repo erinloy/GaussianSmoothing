@@ -1,4 +1,4 @@
-﻿namespace Utils;
+﻿namespace PrettyPrint;
 
 public static class PrettyPrintExtensions
 {
