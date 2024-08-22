@@ -28,6 +28,8 @@ public class GaussianSmoothingTests
             { 160, 170, 180, 190, 200 },
             { 210, 220, 230, 240, 250 }
         };
+        _output.WriteLine($"IMAGE:\n{image.PrettyPrint()}");
+
         double sigma = 1.0;
 
         // Act
@@ -66,6 +68,8 @@ public class GaussianSmoothingTests
             { 160, 170, 180, 190, 200 },
             { 210, 220, 230, 240, 250 }
         };
+        _output.WriteLine($"IMAGE:\n{image.PrettyPrint()}");
+
         double sigma = 1.0;
 
         // Act
@@ -89,6 +93,38 @@ public class GaussianSmoothingTests
         result.Should().BeEquivalentTo(expected, options => options.WithStrictOrdering());
     }
 
+    [Fact]
+    public void ApplyGaussianSmoothing_SimplifiedTest()
+    {
+        // Arrange
+        byte[,] image = new byte[,]
+        {
+            { 10, 20, 30 },
+            { 40, 50, 60 },
+            { 70, 80, 90 }
+        };
+        _output.WriteLine($"IMAGE:\n{image.PrettyPrint()}");
+
+        double sigma = 1.0;
+
+        // Act
+        byte[,] result = GaussianSmoothingExtensions.ApplyGaussianSmoothing(image, sigma);
+
+        _output.WriteLine($"RESULT:\n{result.PrettyPrint()}");
+
+        // Expected result converted from previous double implementation
+        byte[,] expected = new byte[,]
+        {
+            { 27, 33, 38 },
+            { 44, 50, 56 },
+            { 62, 67, 73 }
+        };
+
+        _output.WriteLine($"EXPECT:\n{expected.PrettyPrint()}");
+
+        // Assert
+        result.Should().BeEquivalentTo(expected, options => options.WithStrictOrdering());
+    }
 
     [Fact]
     public void TestPrettyPrint()

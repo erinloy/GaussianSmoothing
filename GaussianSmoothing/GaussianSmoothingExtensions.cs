@@ -96,8 +96,8 @@ public static class GaussianSmoothingExtensions
     // Reflect helper function to handle boundary conditions
     private static int Reflect(int x, int length)
     {
-        if (x < 0) return -x - 1;
-        if (x >= length) return 2 * length - x - 1;
+        if (x < 0) return Math.Min(-x - 1, length - 1);
+        if (x >= length) return Math.Max(2 * length - x - 1, 0);
         return x;
     }
 }
