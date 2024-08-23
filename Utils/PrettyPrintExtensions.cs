@@ -4,14 +4,17 @@ public static class PrettyPrintExtensions
 {
     public static string PrettyPrint(this Array array)
     {
+        if (array == null) return "{}"; 
         int maxLength = GetMaxLength(array);
+        var indicies = new int[array.Rank];
         var sb = new System.Text.StringBuilder();
-        PrettyPrintRecursive(array, sb, 0, new int[array.Rank], maxLength);
+        PrettyPrintRecursive(array, sb, 0, indicies, maxLength);
         return sb.ToString();
     }
 
     private static int GetMaxLength(Array array)
     {
+        if (array == null) return 0;
         int maxLength = 0;
         foreach (var item in array)
         {
