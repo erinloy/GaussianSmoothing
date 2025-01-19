@@ -1,5 +1,7 @@
 using Microsoft.VisualStudio.TestPlatform.Utilities;
 using PrettyPrint;
+
+using Xunit;
 using Xunit.Abstractions;
 
 namespace UtilsTests;
